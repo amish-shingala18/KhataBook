@@ -11,7 +11,17 @@ data class CustomerEntity(
     @ColumnInfo
     var customerName:String,
     @ColumnInfo
-    var customerMobile:String
+    var customerMobile:String,
+    @ColumnInfo
+    var customerFlat:String="",
+    @ColumnInfo
+    var customerArea:String="",
+    @ColumnInfo
+    var customerPinCode:String="",
+    @ColumnInfo
+    var customerCity:String="",
+    @ColumnInfo
+    var customerState:String=""
 )
 
 @Entity(tableName = "entry")
@@ -27,5 +37,14 @@ data class EntryEntity(
     @ColumnInfo
     var productPrice:Int,
     @ColumnInfo
-    var productAmount:Int
+    var productAmount:Int,
+    @ColumnInfo
+    var status:Int
+)
+
+data class TransactionEntity(
+    var charFirstName:String,
+    var userName:String,
+    var userProductName:String,
+    var userProductPrice:Int
 )

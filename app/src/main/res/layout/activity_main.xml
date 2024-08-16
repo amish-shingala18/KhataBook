@@ -63,6 +63,7 @@
 
         <ImageView
             android:id="@+id/imgCollection"
+            style="@style/IconTheme"
             android:layout_width="25dp"
             android:layout_height="25dp"
             android:layout_marginEnd="20dp"

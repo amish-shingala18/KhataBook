@@ -76,4 +76,6 @@ class MainActivity : AppCompatActivity() {
             dialog.show()
         }
     }
+    private fun startComName(){
+    }
 }
