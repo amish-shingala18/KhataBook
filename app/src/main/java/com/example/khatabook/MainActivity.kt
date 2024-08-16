@@ -1,10 +1,10 @@
 package com.example.khatabook
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
@@ -12,12 +12,14 @@ import com.example.khatabook.activity.AddEntryActivity
 import com.example.khatabook.activity.AddUserActivity
 import com.example.khatabook.adapter.TabAdapter
 import com.example.khatabook.databinding.ActivityMainBinding
+import com.example.khatabook.helper.SharedHelper
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.android.material.tabs.TabLayoutMediator
 import com.google.android.material.textfield.TextInputLayout
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding : ActivityMainBinding
+    private var sharedHelper = SharedHelper()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         //enableEdgeToEdge()
@@ -52,6 +54,7 @@ class MainActivity : AppCompatActivity() {
             startActivity(addEntryIntent)
         }
     }
+    @SuppressLint("InflateParams")
     private fun bottomSheet(){
         binding.lnrCompany.setOnClickListener {
             val dialog = BottomSheetDialog(this)
@@ -61,7 +64,7 @@ class MainActivity : AppCompatActivity() {
             val edtCompanyName = bottomView.findViewById<EditText>(R.id.edtCompanyName)
             val txtCompanyLayout = bottomView.findViewById<TextInputLayout>(R.id.txtCompanyLayout)
             val btnSave = bottomView.findViewById<Button>(R.id.btnSave)
-            btnSave.setOnClickListener {
+            btnSave.setOnClickListener{
                 val companyName = edtCompanyName.text.toString()
                 if (companyName.isEmpty()) {
                     txtCompanyLayout.error = "Enter Company Name"
