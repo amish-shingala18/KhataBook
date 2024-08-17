@@ -1,18 +1,21 @@
 package com.example.khatabook.fragment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-
+import androidx.core.content.ContextCompat
+import com.example.khatabook.R
 import com.example.khatabook.adapter.HomeAdapter
 import com.example.khatabook.databinding.FragmentHomeBinding
+import com.example.khatabook.helper.EntryEntity
 import com.example.khatabook.helper.TransactionEntity
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
-    private lateinit var adapter: HomeAdapter
+    private lateinit var homeAdapter: HomeAdapter
     private var transactionList = mutableListOf<TransactionEntity>()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -20,13 +23,13 @@ class HomeFragment : Fragment() {
     ): View {
         binding=FragmentHomeBinding.inflate(inflater,container,false)
         initRv()
-        data()
         return binding.root
     }
     private fun initRv(){
-        adapter = HomeAdapter()
-        binding.rvTodayTrans.adapter=adapter
+        homeAdapter = HomeAdapter(transactionList)
+        binding.rvTodayTrans.adapter=homeAdapter
     }
+    @SuppressLint("ResourceAsColor")
     private fun data(){
         if(transactionList.isEmpty()){
             binding.imgNoData.visibility=View.VISIBLE
@@ -34,14 +37,19 @@ class HomeFragment : Fragment() {
             binding.txtSeeAll.visibility=View.GONE
             binding.txtTodayTransaction.visibility=View.GONE
             binding.rvTodayTrans.visibility=View.GONE
+            binding.homeFragment.setBackgroundColor(ContextCompat.getColor(binding.homeFragment.context,R.color.bgEmpty))
         }
         else{
             binding.imgNoData.visibility=View.GONE
             binding.txtNoData.visibility=View.GONE
             binding.txtSeeAll .visibility=View.VISIBLE
-            binding.
-            txtTodayTransaction.visibility=View.VISIBLE
+            binding.txtTodayTransaction.visibility=View.VISIBLE
             binding.rvTodayTrans.visibility=View.VISIBLE
+            binding.homeFragment.setBackgroundColor(ContextCompat.getColor(binding.homeFragment.context,R.color.white))
         }
+    }
+    override fun onResume() {
+        data()
+        super.onResume()
     }
 }

@@ -57,7 +57,7 @@
         </LinearLayout>
 
         <ImageView
-            android:id="@+id/imageView5"
+            android:id="@+id/imgMessageUser"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_marginEnd="20dp"
@@ -67,12 +67,12 @@
             app:srcCompat="@drawable/message" />
 
         <ImageView
-            android:id="@+id/imageView6"
+            android:id="@+id/imgCallUser"
             android:layout_width="32dp"
             android:layout_height="32dp"
             android:layout_marginEnd="20dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/imageView5"
+            app:layout_constraintEnd_toStartOf="@+id/imgMessageUser"
             app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@drawable/phone_call" />
     </androidx.constraintlayout.widget.ConstraintLayout>

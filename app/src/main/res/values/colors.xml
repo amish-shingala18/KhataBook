@@ -143,4 +143,5 @@
     <color name="white">#FFFFFF</color>
     <color name="black">#000000</color>
     <color name="red">#C72128</color>
+    <color name="bgEmpty">#FFFFF7</color>
 </resources>

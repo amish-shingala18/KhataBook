@@ -22,7 +22,6 @@ class MainActivity : AppCompatActivity() {
     private var sharedHelper = SharedHelper()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        //enableEdgeToEdge()
         binding=ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
@@ -30,6 +29,7 @@ class MainActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+        startComName()
         tabLayout()
         initClick()
         bottomSheet()
@@ -69,13 +69,20 @@ class MainActivity : AppCompatActivity() {
                 if (companyName.isEmpty()) {
                     txtCompanyLayout.error = "Enter Company Name"
                 } else {
-                    binding.txtCompany.text = companyName
+                    addComName(companyName)
+                    startComName()
                     dialog.dismiss()
                 }
             }
             dialog.show()
         }
     }
+    private fun addComName(name:String){
+        sharedHelper.setCompanyName(this,name)
+    }
+    @SuppressLint("SetTextI18n")
     private fun startComName(){
+        val companyName = sharedHelper.getCompanyName(this)
+        binding.txtCompany.text = companyName
     }
 }

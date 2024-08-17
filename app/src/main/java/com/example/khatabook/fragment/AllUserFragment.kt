@@ -1,11 +1,13 @@
 package com.example.khatabook.fragment
 
+import android.annotation.SuppressLint
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import com.example.khatabook.R
 import com.example.khatabook.adapter.AllUserAdapter
 import com.example.khatabook.databinding.FragmentAllUserBinding
 import com.example.khatabook.helper.CustomerEntity
@@ -35,18 +37,30 @@ class AllUserFragment : Fragment() {
         userEmptyData()
         super.onResume()
     }
+    @SuppressLint("ResourceAsColor")
     private fun userEmptyData(){
         if (allUserList.isEmpty()){
             binding.imgNoCustomer.visibility=View.VISIBLE
             binding.txtNoCustomer.visibility=View.VISIBLE
             binding.rvCustomers.visibility=View.GONE
-            Log.e("TAG", "userEmptyData: ${allUserList.size}")
+            binding.allUserFragment.setBackgroundColor(ContextCompat.getColor(binding.allUserFragment.context,R.color.bgEmpty))
         }
         else{
             binding.imgNoCustomer.visibility=View.GONE
             binding.txtNoCustomer.visibility=View.GONE
             binding.rvCustomers.visibility=View.VISIBLE
-            Log.e("TAG", "userEmptyData: ${allUserList.size}")
+            binding.allUserFragment.setBackgroundColor(ContextCompat.getColor(binding.allUserFragment.context,R.color.white))
         }
+    }
+
+    @Deprecated("Deprecated in Java", ReplaceWith(
+        "super.onRequestPermissionsResult(requestCode, permissions, grantResults)",
+        "androidx.fragment.app.Fragment"))
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 }

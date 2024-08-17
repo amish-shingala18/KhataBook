@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/allUserFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".fragment.AllUserFragment">
@@ -21,12 +22,14 @@
 
     <ImageView
         android:id="@+id/imgNoCustomer"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        android:src="@drawable/message"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:src="@drawable/empty_data"
+        android:visibility="gone"
+        app:layout_constraintHeight_percent="0.25"
+        app:layout_constraintWidth_percent="0.50"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -36,8 +39,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:gravity="center"
-        android:visibility="gone"
         android:text="Add customers and collect payments faster"
+        android:visibility="gone"
+        android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"

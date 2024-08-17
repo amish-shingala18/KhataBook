@@ -86,8 +86,9 @@
                 android:id="@+id/txtCompany"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:text="Company"
+                android:hint="Company"
                 android:textColor="@color/white"
+                android:textColorHint="@color/white"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 

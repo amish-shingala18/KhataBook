@@ -2,6 +2,7 @@ package com.example.khatabook.helper
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.ForeignKey
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "customer")
@@ -24,27 +25,34 @@ data class CustomerEntity(
     var customerState:String=""
 )
 
-@Entity(tableName = "entry")
+@Entity(tableName = "entry",
+//    foreignKeys = [ForeignKey(entity = CustomerEntity::class,
+//    parentColumns = [""],
+//    childColumns = [""],
+//    onDelete = ForeignKey.CASCADE,
+//    onUpdate = ForeignKey.CASCADE)]
+)
 data class EntryEntity(
     @PrimaryKey(autoGenerate = true)
     var entryId:Int=0,
     @ColumnInfo
-    var customerName:String,
+    var entryCustomerName:String,
     @ColumnInfo
-    var productName:String,
+    var entryProductName:String,
     @ColumnInfo
-    var productQuantity:Int,
+    var entryProductQuantity:Int,
     @ColumnInfo
-    var productPrice:Int,
+    var entryProductPrice:Int,
     @ColumnInfo
-    var productAmount:Int,
+    var entryProductAmount:Int,
     @ColumnInfo
-    var status:Int
+    var entryProductStatus:Int
 )
 
 data class TransactionEntity(
     var charFirstName:String,
     var userName:String,
     var userProductName:String,
-    var userProductPrice:Int
+    var userProductAmount:Int,
+    var userProductStatus:Int
 )
