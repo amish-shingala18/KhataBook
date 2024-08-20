@@ -26,17 +26,17 @@ data class CustomerEntity(
 )
 
 @Entity(tableName = "entry",
-//    foreignKeys = [ForeignKey(entity = CustomerEntity::class,
-//    parentColumns = [""],
-//    childColumns = [""],
-//    onDelete = ForeignKey.CASCADE,
-//    onUpdate = ForeignKey.CASCADE)]
+    foreignKeys = [ForeignKey(entity = CustomerEntity::class,
+    parentColumns = ["customerId"],
+    childColumns = ["entryCustomerId"],
+    onDelete = ForeignKey.CASCADE,
+    onUpdate = ForeignKey.CASCADE)]
 )
 data class EntryEntity(
     @PrimaryKey(autoGenerate = true)
     var entryId:Int=0,
-    @ColumnInfo
-    var entryCustomerName:String,
+    @ColumnInfo(index = true)
+    var entryCustomerId:Int,
     @ColumnInfo
     var entryProductName:String,
     @ColumnInfo
@@ -50,9 +50,35 @@ data class EntryEntity(
 )
 
 data class TransactionEntity(
-    var charFirstName:String,
-    var userName:String,
-    var userProductName:String,
-    var userProductAmount:Int,
-    var userProductStatus:Int
+    @ColumnInfo
+    var customerId:Int=0,
+    @ColumnInfo
+    var customerName:String,
+    @ColumnInfo
+    var customerMobile:String,
+    @ColumnInfo
+    var customerFlat:String="",
+    @ColumnInfo
+    var customerArea:String="",
+    @ColumnInfo
+    var customerPinCode:String="",
+    @ColumnInfo
+    var customerCity:String="",
+    @ColumnInfo
+    var customerState:String="",
+
+    @ColumnInfo
+    var entryId:Int=0,
+    @ColumnInfo
+    var entryCustomerId:Int,
+    @ColumnInfo
+    var entryProductName:String,
+    @ColumnInfo
+    var entryProductQuantity:Int,
+    @ColumnInfo
+    var entryProductPrice:Int,
+    @ColumnInfo
+    var entryProductAmount:Int,
+    @ColumnInfo
+    var entryProductStatus:Int
 )

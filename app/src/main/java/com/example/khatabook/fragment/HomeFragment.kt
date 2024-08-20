@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import com.example.khatabook.R
 import com.example.khatabook.adapter.HomeAdapter
@@ -23,6 +25,7 @@ class HomeFragment : Fragment() {
     ): View {
         binding=FragmentHomeBinding.inflate(inflater,container,false)
         initRv()
+        exit()
         return binding.root
     }
     private fun initRv(){
@@ -46,6 +49,11 @@ class HomeFragment : Fragment() {
             binding.txtTodayTransaction.visibility=View.VISIBLE
             binding.rvTodayTrans.visibility=View.VISIBLE
             binding.homeFragment.setBackgroundColor(ContextCompat.getColor(binding.homeFragment.context,R.color.white))
+        }
+    }
+    private fun exit(){
+        activity?.onBackPressedDispatcher?.addCallback {
+            requireActivity().finish()
         }
     }
     override fun onResume() {

@@ -1,11 +1,17 @@
 package com.example.khatabook
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.khatabook.activity.AddEntryActivity
@@ -33,6 +39,27 @@ class MainActivity : AppCompatActivity() {
         tabLayout()
         initClick()
         bottomSheet()
+
+        val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
+            if(it[Manifest.permission.CALL_PHONE] == true && it[Manifest.permission.SEND_SMS] == true)
+            {
+                Toast.makeText(this, "Permission Granted", Toast.LENGTH_SHORT).show()
+            }
+            else
+            {
+                Toast.makeText(this, "Permission Denied", Toast.LENGTH_SHORT).show()
+            }
+        }
+        val status = ContextCompat.checkSelfPermission(this,Manifest.permission.CALL_PHONE)
+
+        if(status==PackageManager.PERMISSION_GRANTED) {}
+        else if(ActivityCompat.shouldShowRequestPermissionRationale(
+                this, Manifest.permission.CALL_PHONE)){}
+        else
+        {
+            requestPermissionLauncher.launch(arrayOf(Manifest.permission.CALL_PHONE,Manifest.permission.SEND_SMS))
+        }
+
     }
     private fun tabLayout(){
         val tabAdapter = TabAdapter(this)
@@ -85,4 +112,5 @@ class MainActivity : AppCompatActivity() {
         val companyName = sharedHelper.getCompanyName(this)
         binding.txtCompany.text = companyName
     }
+
 }

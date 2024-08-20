@@ -1,11 +1,14 @@
 package com.example.khatabook.fragment
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import com.example.khatabook.R
 import com.example.khatabook.adapter.AllUserAdapter
@@ -14,6 +17,7 @@ import com.example.khatabook.helper.CustomerEntity
 import com.example.khatabook.helper.DbRoomHelper
 
 class AllUserFragment : Fragment() {
+    private lateinit var permissionLauncher : ActivityResultLauncher<Array<String>>
     private lateinit var binding: FragmentAllUserBinding
     private lateinit var allUserAdapter: AllUserAdapter
     private var allUserList = mutableListOf<CustomerEntity>()
@@ -23,11 +27,20 @@ class AllUserFragment : Fragment() {
 
     ): View {
         binding=FragmentAllUserBinding.inflate(layoutInflater)
+        permissionLauncher=registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()){
+            if (it[Manifest.permission.CALL_PHONE]==true && it[Manifest.permission.SEND_SMS]==true) {
+
+            }
+            else{
+
+            }
+        }
+
         initRv()
         return binding.root
     }
     private fun initRv(){
-        allUserAdapter=AllUserAdapter(allUserList)
+        allUserAdapter=AllUserAdapter(allUserList, permissionLauncher)
         binding.rvCustomers.adapter=allUserAdapter
     }
     override fun onResume() {
@@ -53,14 +66,5 @@ class AllUserFragment : Fragment() {
         }
     }
 
-    @Deprecated("Deprecated in Java", ReplaceWith(
-        "super.onRequestPermissionsResult(requestCode, permissions, grantResults)",
-        "androidx.fragment.app.Fragment"))
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<out String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-    }
+
 }
