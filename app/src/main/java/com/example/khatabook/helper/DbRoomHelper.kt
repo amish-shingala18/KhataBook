@@ -9,7 +9,7 @@ import androidx.room.RoomDatabase
 abstract class DbRoomHelper : RoomDatabase() {
     abstract fun dao():DAO
     companion object{
-        private var db:DbRoomHelper?=null
+        var db:DbRoomHelper?=null
         fun initDb(context:Context):DbRoomHelper{
             if (db==null){
                 db=Room.databaseBuilder(

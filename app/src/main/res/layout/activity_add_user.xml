@@ -35,6 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:text="Add User"
+            android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="@+id/imgBack"
@@ -142,10 +143,11 @@
         app:layout_constraintTop_toBottomOf="@+id/textView10">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtFlat"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Flat / Building Number"
-            android:inputType="textCapWords"/>
+            android:inputType="textCapWords" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -181,6 +183,7 @@
         app:layout_constraintTop_toBottomOf="@+id/txtAreaLayout">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtPinCode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Pincode"

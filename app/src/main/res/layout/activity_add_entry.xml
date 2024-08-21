@@ -162,14 +162,6 @@
             android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/textView16"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="₹"
-            android:textColor="@color/white"
-            android:textSize="16sp" />
-
-        <TextView
             android:id="@+id/txtTotalAmount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -221,10 +213,31 @@
         android:layout_marginTop="10dp"
         android:drawablePadding="5dp"
         android:gravity="center"
-        android:text="@string/select_date"
-        android:visibility="gone"
-        app:drawableEndCompat="@drawable/collection"
+        android:text="Set Collection Reminder"
+        android:visibility="visible"
+        app:drawableStartCompat="@drawable/collection"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rgPayment" />
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvDatePicker"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        app:cardCornerRadius="10dp"
+        app:layout_constraintBottom_toBottomOf="@+id/rgPayment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/rgPayment"
+        app:layout_constraintTop_toTopOf="@+id/rgPayment">
+
+        <TextView
+            android:id="@+id/txtDatePicker"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingHorizontal="5dp"
+            android:drawableStart="@drawable/collection"
+            android:drawableEnd="@drawable/drop_down"
+            android:drawablePadding="10dp"
+            android:gravity="center" />
+    </androidx.cardview.widget.CardView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

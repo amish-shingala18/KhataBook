@@ -46,10 +46,14 @@ data class EntryEntity(
     @ColumnInfo
     var entryProductAmount:Int,
     @ColumnInfo
-    var entryProductStatus:Int
+    var entryProductStatus:Int,
+    @ColumnInfo
+    var entryProductDate:String,
+    @ColumnInfo
+    var entryCollectionDate:String=""
 )
 
-data class TransactionEntity(
+data class  TransactionEntity(
     @ColumnInfo
     var customerId:Int=0,
     @ColumnInfo
@@ -80,5 +84,9 @@ data class TransactionEntity(
     @ColumnInfo
     var entryProductAmount:Int,
     @ColumnInfo
-    var entryProductStatus:Int
+    var entryProductStatus:Int,
+    @ColumnInfo
+    var entryProductDate:String,
+    @ColumnInfo
+    var entryCollectionDate:String=""
 )

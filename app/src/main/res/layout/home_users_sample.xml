@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:id="@+id/cvHomeUsers"
     android:layout_marginHorizontal="10dp"
     android:layout_marginVertical="5dp"
     app:cardCornerRadius="20dp">
@@ -13,7 +14,7 @@
         android:layout_height="match_parent">
 
         <TextView
-            android:id="@+id/textView4"
+            android:id="@+id/txtHomeFirstTxt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -33,12 +34,12 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:orientation="vertical"
-            app:layout_constraintBottom_toBottomOf="@+id/textView4"
-            app:layout_constraintStart_toEndOf="@+id/textView4"
-            app:layout_constraintTop_toTopOf="@+id/textView4">
+            app:layout_constraintBottom_toBottomOf="@+id/txtHomeFirstTxt"
+            app:layout_constraintStart_toEndOf="@+id/txtHomeFirstTxt"
+            app:layout_constraintTop_toTopOf="@+id/txtHomeFirstTxt">
 
             <TextView
-                android:id="@+id/textUserName"
+                android:id="@+id/txtHomeUserName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="User Name"
@@ -46,34 +47,22 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/txtHomeProduct"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Product Name" />
         </LinearLayout>
 
         <TextView
-            android:id="@+id/textView5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="3dp"
-            android:gravity="center"
-            android:text="₹"
-            android:textColor="@android:color/holo_red_dark"
-            app:layout_constraintBottom_toBottomOf="@+id/linearLayout2"
-            app:layout_constraintEnd_toStartOf="@+id/txtAmount"
-            app:layout_constraintTop_toTopOf="@+id/linearLayout2" />
-
-        <TextView
-            android:id="@+id/txtAmount"
+            android:id="@+id/txtHomeAmount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
             android:text="1000"
             android:textColor="@android:color/holo_red_dark"
-            app:layout_constraintBottom_toBottomOf="@+id/textView5"
+            app:layout_constraintBottom_toBottomOf="@+id/linearLayout2"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/textView5" />
+            app:layout_constraintTop_toTopOf="@+id/linearLayout2" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

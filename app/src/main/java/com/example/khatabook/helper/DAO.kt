@@ -25,4 +25,7 @@ interface DAO {
     fun entryDelete(entryEntity: EntryEntity)
     @Query("SELECT * FROM entry")
     fun entryRead() : MutableList<EntryEntity>
+
+    @Query("SELECT * FROM entry INNER JOIN customer ON entry.entryCustomerId == customer.customerId WHERE entry.entryProductDate== :currentDate")
+    fun allRead(currentDate:String): MutableList<TransactionEntity>
 }
