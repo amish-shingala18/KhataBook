@@ -53,7 +53,6 @@ class HomeAdapter(private var list: MutableList<TransactionEntity>) :
             intent.putExtra("transactionCollectionDate",list[position].entryCollectionDate)
             intent.putExtra("transactionCustomerMobile",list[position].customerMobile)
             startActivity(holder.itemView.context,intent,null)
-
         }
     }
     @SuppressLint("NotifyDataSetChanged")

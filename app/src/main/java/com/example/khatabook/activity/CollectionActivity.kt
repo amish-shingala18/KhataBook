@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.icu.util.Calendar
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -58,8 +59,8 @@ class CollectionActivity : AppCompatActivity() {
             val dateSelected = Calendar.getInstance()
             dateSelected.set(year,month,dayOfMonth)
             val formatDate= SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-
             collectionDateFormatted = formatDate.format(dateSelected.time)
+            Log.e("TAG", "datePicker: $collectionDateFormatted", )
             binding.txtCollectionSelectDate.text= collectionDateFormatted
             collectionList = db!!.dao().collectionRead(collectionDateFormatted)
             collectionAdapter.dataChanged(collectionList)
@@ -90,7 +91,9 @@ class CollectionActivity : AppCompatActivity() {
         initDb(this)
         val sdf = SimpleDateFormat("dd/MM/yyyy")
         collectionCurrentDate = sdf.format(System.currentTimeMillis())
-        collectionList = db!!.dao().collectionRead(collectionDateFormatted)
+        collectionList = db!!.dao().collectionRead(collectionCurrentDate)
+        Log.e("TAG", "onResume: $collectionList" )
+        Log.e("TAG", "onResume: $collectionCurrentDate", )
         collectionAdapter.dataChanged(collectionList)
         data()
         super.onResume()

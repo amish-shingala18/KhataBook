@@ -17,9 +17,13 @@ import com.example.khatabook.helper.DbRoomHelper.Companion.initDb
 import com.example.khatabook.helper.TransactionEntity
 
 class UserDetailActivity : AppCompatActivity() {
-    private var updateAddress: String=""
     private var updateMobile: String=""
     private var updateName: String=""
+    private var customerFlat: String=""
+    private var customerArea: String=""
+    private var customerPinCode: String=""
+    private var customerCity: String=""
+    private var customerState: String=""
     private lateinit var binding:ActivityUserDetailBinding
     private var customerEntryList = mutableListOf<TransactionEntity>()
     private lateinit var customerEntryAdapter :CustomerEntriesAdapter
@@ -47,14 +51,36 @@ class UserDetailActivity : AppCompatActivity() {
         intentId=intent.getIntExtra("customerId",-1)
         val customerName=intent.getStringExtra("customerName")
         val customerMobile=intent.getStringExtra("customerMobile")
-        val customerFlat=intent.getStringExtra("customerFlat")
-        val customerArea=intent.getStringExtra("customerArea")
-        val customerPinCode=intent.getStringExtra("customerPinCode")
-        val customerCity=intent.getStringExtra("customerCity")
-        val customerState=intent.getStringExtra("customerState")
+        customerFlat=intent.getStringExtra("customerFlat")!!
+        customerArea=intent.getStringExtra("customerArea")!!
+        customerPinCode=intent.getStringExtra("customerPinCode")!!
+        customerCity=intent.getStringExtra("customerCity")!!
+        customerState=intent.getStringExtra("customerState")!!
         binding.txtUpdateName.text = customerName
         binding.txtUpdateMobile.text = customerMobile
-        binding.txtUpdateAddress.text = "$customerFlat $customerArea $customerCity $customerState $customerPinCode"
+        if (customerFlat.isEmpty() && customerArea.isEmpty() && customerCity.isEmpty() && customerState.isEmpty() && customerPinCode.isEmpty()) {
+            binding.txtUpdateAddress.visibility = View.GONE
+            binding.textAddress.visibility = View.GONE
+        }
+        if (customerFlat.isEmpty()) {
+            customerFlat==""
+        }
+        else if (customerArea.isEmpty()) {
+            customerArea=""
+        }
+        else if (customerCity.isEmpty()) {
+            customerCity=""
+        }
+        else if (customerState.isEmpty()) {
+            customerState=""
+        }
+        else if (customerPinCode.isEmpty()) {
+            customerPinCode=""
+        }
+        else {
+            binding.txtUpdateAddress.text =
+                "$customerFlat, $customerArea, $customerCity, $customerState, $customerPinCode"
+        }
     }
     private fun initCLick(){
         binding.imgBackClick.setOnClickListener {
@@ -70,17 +96,21 @@ class UserDetailActivity : AppCompatActivity() {
     private fun editData(){
         updateName=binding.txtUpdateName.text.toString()
         updateMobile=binding.txtUpdateMobile.text.toString()
-        updateAddress=binding.txtUpdateAddress.text.toString()
         val editIntent= Intent(this@UserDetailActivity,AddUserActivity::class.java)
         editIntent.putExtra("updateCustomerId",intentId)
         editIntent.putExtra("updateCustomerName",updateName)
         editIntent.putExtra("updateCustomerMobile",updateMobile)
-        //editIntent.putExtra("updateCustomerAddress",updateAddress)
+        editIntent.putExtra("updateFlat",customerFlat)
+        editIntent.putExtra("updateArea",customerArea)
+        editIntent.putExtra("updatePinCode",customerPinCode)
+        editIntent.putExtra("updateCity",customerCity)
+        editIntent.putExtra("updateState",customerState)
         startActivity(editIntent)
     }
     private fun deleteCustomer(){
         initDb(this)
-        val customerEntity = CustomerEntity(customerId = intentId!!, customerName = updateName, customerMobile = updateMobile)
+        val customerEntity = CustomerEntity(customerId = intentId!!,
+            customerName = updateName, customerMobile = updateMobile)
         db!!.dao().customerDelete(customerEntity)
         allUserList.remove(customerEntity)
         finish()

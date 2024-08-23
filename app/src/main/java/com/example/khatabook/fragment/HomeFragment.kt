@@ -19,6 +19,7 @@ import com.example.khatabook.helper.TransactionEntity
 import java.text.SimpleDateFormat
 import java.util.Locale
 
+@Suppress("SENSELESS_COMPARISON")
 class HomeFragment : Fragment() {
     private var dateFormatted: String=""
     private var currentDate:String=""
@@ -90,12 +91,22 @@ class HomeFragment : Fragment() {
         datePicker.datePicker.maxDate = calendar.getTimeInMillis()
         datePicker.show()
     }
-    @SuppressLint("SimpleDateFormat")
+    @SuppressLint("SimpleDateFormat", "SetTextI18n")
     override fun onResume() {
         initDb(requireActivity())
         val sdf = SimpleDateFormat("dd/MM/yyyy")
         currentDate = sdf.format(System.currentTimeMillis())
         transactionList = db!!.dao().allRead(currentDate)
+        val debitAmount = db!!.dao().debitRead(currentDate)
+        binding.txtDebitAmount.text="₹${debitAmount}"
+        if (debitAmount==null){
+            binding.txtDebitAmount.text="₹0"
+        }
+        val creditAmount = db!!.dao().creditRead(currentDate)
+        binding.txtCreditAmount.text="₹${creditAmount}"
+        if (creditAmount==null){
+            binding.txtCreditAmount.text="₹0"
+        }
         homeAdapter.dataChanged(transactionList)
         data()
         super.onResume()

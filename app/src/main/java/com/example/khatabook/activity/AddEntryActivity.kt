@@ -2,6 +2,7 @@ package com.example.khatabook.activity
 
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
+import android.content.DialogInterface
 import android.graphics.Rect
 import android.os.Bundle
 import android.util.Log
@@ -29,7 +30,7 @@ class AddEntryActivity : AppCompatActivity() {
     private var entryUpdateId: Int = -1
     private var entryCurrentDate = ""
     private var formattedDate = ""
-    private var txtProductStatus: Int = 0
+    private var txtProductStatus: Int = 1
     private lateinit var binding: ActivityAddEntryBinding
     private lateinit var spinnerAdapter: SpinnerAdapter
     private val calendar = Calendar.getInstance()
@@ -44,30 +45,47 @@ class AddEntryActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
-        initRv()
+        //Get Intent
+        getEditData()
+
+        //Set Spinner of User
+        initSpinner()
+
+        //Insert and Update
         initClick()
+
+        //Keyboard padding
         keyboardDetector()
     }
 
-    private fun initRv() {
+    private fun initSpinner() {
         userList = initDb(this).dao().customerRead()
         spinnerAdapter = SpinnerAdapter(userList)
         binding.customerSpinner.adapter = spinnerAdapter
     }
     @SuppressLint("SimpleDateFormat", "SetTextI18n")
+
     private fun initClick() {
-        getEditData()
-        if(entryUpdateId!=-1||entryCurrentDate.isNotEmpty()) {
+        //Update Detect
+        if(entryUpdateId!=-1) {
             binding.textEntry.text = "Update Entry"
             binding.btnSubmit.text = "Update"
         }
+
+        //Current Date
         val sdf = SimpleDateFormat("dd/MM/yyyy")
         entryCurrentDate = sdf.format(System.currentTimeMillis())
         binding.txtDatePicker.text = entryCurrentDate
+
+
+        //Radio button Payment Status
         paymentStatus()
+
+
         binding.txtCollectionDate.setOnClickListener {
             paymentDatePicker()
         }
+
         binding.cvDatePicker.setOnClickListener {
             entryDatePicker()
         }
@@ -112,11 +130,12 @@ class AddEntryActivity : AppCompatActivity() {
         } else if (binding.customerSpinner.selectedItemPosition == 0) {
             Toast.makeText(this, "Please Select Customer", Toast.LENGTH_SHORT).show()
         } else {
-            getEditData()
             binding.txtProductNameLayout.isEnabled = false
             binding.txtProductQuantityLayout.isEnabled = false
             binding.txtProductPriceLayout.isEnabled = false
+
             val customerNameEntity = userList[binding.customerSpinner.selectedItemPosition]
+
             val entryEntity = EntryEntity(
                 entryCustomerId = customerNameEntity.customerId,
                 entryProductName = productName,
@@ -162,10 +181,20 @@ class AddEntryActivity : AppCompatActivity() {
             formattedDate = dateFormat.format(selectedDate.time)
             binding.txtCollectionDate.text = "Selected Date: $formattedDate"
         }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH))
+        datePickerDialog.setButton(
+            DialogInterface.BUTTON_NEGATIVE, "Cancel"
+        ) { _, which ->
+            if (which == DialogInterface.BUTTON_NEGATIVE) {
+            binding.rbDebit.isChecked=true
+            txtProductStatus=1
+            formattedDate=""
+            }
+        }
         datePickerDialog.datePicker.minDate = calendar.timeInMillis
         datePickerDialog.show()
         binding.txtCollectionDate.setCompoundDrawables(null, null, null, null)
     }
+
     private fun paymentStatus() {
         binding.rgPayment.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
@@ -177,6 +206,7 @@ class AddEntryActivity : AppCompatActivity() {
                 binding.rbCredit.id -> {
                     binding.txtCollectionDate.visibility = View.VISIBLE
                     txtProductStatus = 2
+                    paymentDatePicker()
                 }
             }
             Log.e("TAG", "txtProductStatus: $txtProductStatus")
@@ -203,6 +233,7 @@ class AddEntryActivity : AppCompatActivity() {
         val productAmount = intent.getStringExtra("editProductAmount")
         val productDate = intent.getStringExtra("editProductDate")
         val productCollectionDate = intent.getStringExtra("editCollectionDate")
+
         txtProductStatus = intent.getIntExtra("editProductStatus", 1)
         entryUpdateId = intent.getIntExtra("editUpdateId", -1)
         binding.edtProductName.setText(productName)
@@ -211,13 +242,21 @@ class AddEntryActivity : AppCompatActivity() {
         binding.txtDatePicker.text = productDate
         binding.txtCollectionDate.text = productCollectionDate ?: ""
         formattedDate = productCollectionDate ?: ""
-        if (txtProductStatus == 1) {
+        if(productAmount==null){
+            binding.txtTotalAmount.text="₹0"
+        }
+        else {
+            binding.txtTotalAmount.text = "₹$productAmount"
+        }
+
+        paymentStatus()
+
+        if (txtProductStatus==1) {
             binding.rbDebit.isChecked = true
             binding.txtCollectionDate.visibility = View.GONE
         } else {
             binding.rbCredit.isChecked = true
             binding.txtCollectionDate.visibility = View.VISIBLE
         }
-        binding.txtTotalAmount.text = "₹$productAmount"
     }
 }

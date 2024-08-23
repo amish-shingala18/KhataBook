@@ -1,11 +1,13 @@
 package com.example.khatabook.adapter
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.khatabook.R
+import com.example.khatabook.activity.TransactionDetailActivity
 import com.example.khatabook.databinding.CustomerEntriesSampleBinding
 import com.example.khatabook.helper.TransactionEntity
 
@@ -37,6 +39,22 @@ class CustomerEntriesAdapter(private var list: MutableList<TransactionEntity>) :
         else{
             holder.binding.customerEntryProAmount.setTextColor(holder.itemView.context.getColor(R.color.red))
         }
+//        holder.binding.cvCustomerEntries.setOnClickListener {
+//            //Entry Date, Customer Name, Prod Name, Quantity, Price, Amount, Status, Collection Date
+//            val customerEntryIntent= Intent(holder.itemView.context, TransactionDetailActivity::class.java)
+//            customerEntryIntent.putExtra("customerEntryCustomerId",list[position].entryCustomerId)
+//            customerEntryIntent.putExtra("customerEntryCustomerName",list[position].customerName)
+//            customerEntryIntent.putExtra("customerEntryId",list[position].entryId)
+//            customerEntryIntent.putExtra("customerEntryProductName",list[position].entryProductName)
+//            customerEntryIntent.putExtra("customerEntryProductQuantity",list[position].entryProductQuantity)
+//            customerEntryIntent.putExtra("customerEntryProductPrice",list[position].entryProductPrice)
+//            customerEntryIntent.putExtra("customerEntryProductAmount",list[position].entryProductAmount)
+//            customerEntryIntent.putExtra("customerEntryProductStatus",list[position].entryProductStatus)
+//            customerEntryIntent.putExtra("customerEntryProductDate",list[position].entryProductDate)
+//            customerEntryIntent.putExtra("customerEntryCollectionDate",list[position].entryCollectionDate)
+//            customerEntryIntent.putExtra("customerEntryCustomerMobile",list[position].customerMobile)
+//            holder.itemView.context.startActivity(customerEntryIntent)
+//        }
     }
     @SuppressLint("NotifyDataSetChanged")
     fun dataSetChanged(l1: MutableList<TransactionEntity>) {

@@ -40,7 +40,6 @@ class MainActivity : AppCompatActivity() {
         tabLayout()
         initClick()
         bottomSheet()
-
         val requestPermissionLauncher = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) {
             if(it[Manifest.permission.CALL_PHONE] == true && it[Manifest.permission.SEND_SMS] == true)
             {

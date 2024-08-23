@@ -33,4 +33,9 @@ interface DAO {
     fun collectionRead(collectionDate:String): MutableList<TransactionEntity>
     @Query("SELECT * FROM entry INNER JOIN customer ON entry.entryCustomerId == customer.customerId WHERE entry.entryCustomerId== :intentId")
     fun transactionRead(intentId: Int): MutableList<TransactionEntity>
+
+    @Query("SELECT SUM(entryProductAmount) FROM entry WHERE entryProductStatus==1 AND entry.entryProductDate==:currentDate")
+    fun debitRead(currentDate: String):String
+    @Query("SELECT SUM(entryProductAmount) FROM entry WHERE entryProductStatus==2 AND entry.entryProductDate==:currentDate")
+    fun creditRead(currentDate: String):String
 }

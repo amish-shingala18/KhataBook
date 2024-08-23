@@ -57,6 +57,10 @@ class AddUserActivity : AppCompatActivity() {
             binding.txtMobileLayout.setEnabled(true)
             binding.txtMobileLayout.setError("Enter Mobile")
         }
+        else if(customerMobile.length!=10){
+            binding.txtMobileLayout.setEnabled(true)
+            binding.txtMobileLayout.setError("Enter Valid Number")
+        }
         else {
             getEditData()
             val customerEntity =
@@ -80,7 +84,17 @@ class AddUserActivity : AppCompatActivity() {
         val customerName=intent.getStringExtra("updateCustomerName")
         val customerMobile=intent.getStringExtra("updateCustomerMobile")
         customerUpdateId=intent.getIntExtra("updateCustomerId",-1)
+        val customerFlat=intent.getStringExtra("updateFlat")
+        val customerArea=intent.getStringExtra("updateArea")
+        val customerPinCode=intent.getStringExtra("updatePinCode")
+        val customerCity=intent.getStringExtra("updateCity")
+        val customerState=intent.getStringExtra("updateState")
         binding.edtName.setText(customerName)
         binding.edtMobile.setText(customerMobile)
+        binding.edtFlat.setText(customerFlat)
+        binding.edtArea.setText(customerArea)
+        binding.edtPinCode.setText(customerPinCode)
+        binding.edtCity.setText(customerCity)
+        binding.edtState.setText(customerState)
     }
 }

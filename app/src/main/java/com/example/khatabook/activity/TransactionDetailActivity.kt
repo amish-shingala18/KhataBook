@@ -17,11 +17,11 @@ import com.example.khatabook.helper.TransactionEntity
 class TransactionDetailActivity : AppCompatActivity() {
     private var transactionCustomerMobile:String?=""
     private var transactionEntryProductId=0
-    private var transactionProductStatus: Int = 0
+    private var transactionProductStatus: Int=1
     private var transactionProductAmount: String = ""
     private var transactionProductDate: String?=""
     private var transactionProductPrice: String = ""
-    private var transactionCollectionDate: String?=""
+    private var transactionCollectionDate: String=""
     private var transactionProductQuantity: String=""
     private var transactionProductName: String?=""
     private var transactionCustomerName: String?=""
@@ -38,6 +38,7 @@ class TransactionDetailActivity : AppCompatActivity() {
         }
         initClick()
         getTransactionData()
+        //getCustomerEntryData()
     }
     private fun initClick(){
         binding.imgTransactionBack.setOnClickListener {
@@ -61,7 +62,7 @@ class TransactionDetailActivity : AppCompatActivity() {
             entryProductAmount = transactionProductAmount,
             entryProductStatus = transactionProductStatus,
             entryProductDate = transactionProductDate!!,
-            entryCollectionDate = transactionCollectionDate!!,
+            entryCollectionDate = transactionCollectionDate,
             customerName = transactionCustomerName!!)
         val entryEntity = EntryEntity(
             entryId = transactionIntentId,
@@ -72,7 +73,7 @@ class TransactionDetailActivity : AppCompatActivity() {
             entryProductAmount = transactionProductAmount,
             entryProductStatus = transactionProductStatus,
             entryProductDate = transactionProductDate!!,
-            entryCollectionDate = transactionCollectionDate!!
+            entryCollectionDate = transactionCollectionDate
         )
         db!!.dao().entryDelete(entryEntity)
         transactionList.remove(transactionEntity)
@@ -90,8 +91,9 @@ class TransactionDetailActivity : AppCompatActivity() {
         transactionProductAmount= intent.getStringExtra("transactionProductAmount")!!
         transactionProductStatus=intent.getIntExtra("transactionProductStatus",0)
         transactionProductDate=intent.getStringExtra("transactionProductDate")
-        transactionCollectionDate=intent.getStringExtra("transactionCollectionDate")
+        transactionCollectionDate=intent.getStringExtra("transactionCollectionDate")!!
         transactionCustomerMobile=intent.getStringExtra("transactionCustomerMobile")
+
         binding.txtEntryDate.text="$transactionProductDate"
         binding.txtCustomerName.text=transactionCustomerName
         binding.txtProductName.text=transactionProductName
@@ -113,4 +115,27 @@ class TransactionDetailActivity : AppCompatActivity() {
         editTransactionIntent.putExtra("editCollectionDate",transactionCollectionDate)
         startActivity(editTransactionIntent)
     }
+    //Getting Data from CustomerEntriesAdapter
+    //@SuppressLint("SetTextI18n")
+//    private fun getCustomerEntryData(){
+//        transactionIntentId=intent.getIntExtra("customerEntryCustomerId",-1)
+//        transactionEntryProductId=intent.getIntExtra("customerEntryId",0)
+//        transactionCustomerName=intent.getStringExtra("customerEntryCustomerName")
+//        transactionProductName=intent.getStringExtra("customerEntryProductName")
+//        transactionProductQuantity= intent.getStringExtra("customerEntryProductQuantity")!!
+//        transactionProductPrice= intent.getStringExtra("customerEntryProductPrice")!!
+//        transactionProductAmount= intent.getStringExtra("customerEntryProductAmount")!!
+//        transactionProductStatus=intent.getIntExtra("customerEntryProductStatus",0)
+//        transactionProductDate=intent.getStringExtra("customerEntryProductDate")
+//        transactionCollectionDate=intent.getStringExtra("customerEntryCollectionDate")!!
+//        transactionCustomerMobile=intent.getStringExtra("customerEntryCustomerMobile")
+//
+//        binding.txtEntryDate.text="$transactionProductDate"
+//        binding.txtCustomerName.text=transactionCustomerName
+//        binding.txtProductName.text=transactionProductName
+//        binding.txtProductQuantity.text= transactionProductQuantity
+//        binding.txtProductPrice.text="₹$transactionProductPrice"
+//        binding.txtProductAmount.text="₹$transactionProductAmount"
+//        binding.txtTransCollectionDate.text= transactionCollectionDate
+//    }
 }
