@@ -12,6 +12,7 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.example.khatabook.R
+import com.example.khatabook.activity.UserDetailActivity
 import com.example.khatabook.databinding.AllUserSampleBinding
 import com.example.khatabook.helper.CustomerEntity
 
@@ -59,6 +60,18 @@ class AllUserAdapter(
                 Toast.makeText(holder.sampleBinding.imgMessageUser.context, "SMS Permission is Denied", Toast.LENGTH_SHORT).show()
                 permissionLauncher.launch(arrayOf(Manifest.permission.SEND_SMS))
             }
+        }
+        holder.sampleBinding.cvCustomer.setOnClickListener {
+            val intent = Intent(holder.sampleBinding.cvCustomer.context, UserDetailActivity::class.java)
+            intent.putExtra("customerName",list[position].customerName)
+            intent.putExtra("customerMobile",list[position].customerMobile)
+            intent.putExtra("customerFlat",list[position].customerFlat)
+            intent.putExtra("customerArea",list[position].customerArea)
+            intent.putExtra("customerPinCode",list[position].customerPinCode)
+            intent.putExtra("customerCity",list[position].customerCity)
+            intent.putExtra("customerState",list[position].customerState)
+            intent.putExtra("customerId",list[position].customerId)
+            startActivity(holder.itemView.context,intent,null)
         }
     }
     @SuppressLint("NotifyDataSetChanged")

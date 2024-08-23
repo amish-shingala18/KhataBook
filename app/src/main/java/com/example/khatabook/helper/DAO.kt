@@ -28,4 +28,9 @@ interface DAO {
 
     @Query("SELECT * FROM entry INNER JOIN customer ON entry.entryCustomerId == customer.customerId WHERE entry.entryProductDate== :currentDate")
     fun allRead(currentDate:String): MutableList<TransactionEntity>
+
+    @Query("SELECT * FROM entry INNER JOIN customer ON entry.entryCustomerId == customer.customerId WHERE entry.entryCollectionDate== :collectionDate")
+    fun collectionRead(collectionDate:String): MutableList<TransactionEntity>
+    @Query("SELECT * FROM entry INNER JOIN customer ON entry.entryCustomerId == customer.customerId WHERE entry.entryCustomerId== :intentId")
+    fun transactionRead(intentId: Int): MutableList<TransactionEntity>
 }

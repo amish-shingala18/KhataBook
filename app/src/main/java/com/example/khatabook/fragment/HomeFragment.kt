@@ -24,7 +24,9 @@ class HomeFragment : Fragment() {
     private var currentDate:String=""
     private lateinit var binding: FragmentHomeBinding
     private lateinit var homeAdapter: HomeAdapter
-    private var transactionList = mutableListOf<TransactionEntity>()
+    companion object {
+        var transactionList = mutableListOf<TransactionEntity>()
+    }
     private val calendar = Calendar.getInstance()
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,7 +43,6 @@ class HomeFragment : Fragment() {
             requireActivity().finish()
         }
     }
-
     private fun initRv(){
         homeAdapter = HomeAdapter(transactionList)
         binding.rvTodayTrans.adapter=homeAdapter
@@ -64,16 +65,10 @@ class HomeFragment : Fragment() {
         }
     }
     @SuppressLint("SimpleDateFormat")
-    override fun onResume() {
-        initDb(requireActivity())
+    private fun initClick(){
         val sdf = SimpleDateFormat("dd/MM/yyyy")
         currentDate = sdf.format(System.currentTimeMillis())
-        transactionList = db!!.dao().allRead(currentDate)
-        homeAdapter.dataChanged(transactionList)
-        data()
-        super.onResume()
-    }
-    private fun initClick(){
+        binding.txtSeeAll.text=currentDate
         binding.txtSeeAll.setOnClickListener {
             datePicker()
         }
@@ -84,17 +79,25 @@ class HomeFragment : Fragment() {
             val dateSelected = Calendar.getInstance()
             dateSelected.set(year,month,dayOfMonth)
             val formatDate=SimpleDateFormat("dd/MM/yyyy",Locale.getDefault())
-
             dateFormatted = formatDate.format(dateSelected.time)
-            binding.txtSeeAll.text="Selected Date : $dateFormatted"
+            binding.txtSeeAll.text= dateFormatted
             transactionList = db!!.dao().allRead(dateFormatted)
             homeAdapter.dataChanged(transactionList)
             data()
-
         },calendar.get(Calendar.YEAR),
             calendar.get(Calendar.MONTH),
             calendar.get(Calendar.DAY_OF_MONTH))
         datePicker.datePicker.maxDate = calendar.getTimeInMillis()
         datePicker.show()
+    }
+    @SuppressLint("SimpleDateFormat")
+    override fun onResume() {
+        initDb(requireActivity())
+        val sdf = SimpleDateFormat("dd/MM/yyyy")
+        currentDate = sdf.format(System.currentTimeMillis())
+        transactionList = db!!.dao().allRead(currentDate)
+        homeAdapter.dataChanged(transactionList)
+        data()
+        super.onResume()
     }
 }

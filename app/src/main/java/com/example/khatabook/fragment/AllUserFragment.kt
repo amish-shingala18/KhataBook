@@ -20,7 +20,9 @@ class AllUserFragment : Fragment() {
     private lateinit var permissionLauncher : ActivityResultLauncher<Array<String>>
     private lateinit var binding: FragmentAllUserBinding
     private lateinit var allUserAdapter: AllUserAdapter
-    private var allUserList = mutableListOf<CustomerEntity>()
+    companion object {
+        var allUserList = mutableListOf<CustomerEntity>()
+    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -28,14 +30,13 @@ class AllUserFragment : Fragment() {
     ): View {
         binding=FragmentAllUserBinding.inflate(layoutInflater)
         permissionLauncher=registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()){
-            if (it[Manifest.permission.CALL_PHONE]==true && it[Manifest.permission.SEND_SMS]==true) {
-
-            }
-            else{
-
+            when {
+                it[Manifest.permission.CALL_PHONE]==true && it[Manifest.permission.SEND_SMS]==true -> {
+                }
+                else -> {
+                }
             }
         }
-
         initRv()
         return binding.root
     }
@@ -65,6 +66,4 @@ class AllUserFragment : Fragment() {
             binding.allUserFragment.setBackgroundColor(ContextCompat.getColor(binding.allUserFragment.context,R.color.white))
         }
     }
-
-
 }

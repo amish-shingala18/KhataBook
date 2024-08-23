@@ -1,5 +1,6 @@
 package com.example.khatabook.activity
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -11,6 +12,7 @@ import com.example.khatabook.helper.DbRoomHelper.Companion.db
 import com.example.khatabook.helper.DbRoomHelper.Companion.initDb
 
 class AddUserActivity : AppCompatActivity() {
+    private var customerUpdateId: Int=-1
     private lateinit var binding: ActivityAddUserBinding
     private lateinit var allUserList : MutableList<CustomerEntity>
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -25,7 +27,13 @@ class AddUserActivity : AppCompatActivity() {
         }
         initClick()
     }
-        private fun initClick(){
+    @SuppressLint("SetTextI18n")
+    private fun initClick(){
+        getEditData()
+        if(customerUpdateId!=-1||allUserList.isNotEmpty()){
+            binding.txtAddUser.text="Update User"
+            binding.btnSubmit.text="Update"
+        }
         binding.btnSubmit.setOnClickListener {
             addUser()
         }
@@ -50,14 +58,29 @@ class AddUserActivity : AppCompatActivity() {
             binding.txtMobileLayout.setError("Enter Mobile")
         }
         else {
+            getEditData()
             val customerEntity =
-                CustomerEntity(customerName = customerName, customerMobile = customerMobile,
+                CustomerEntity( customerName = customerName, customerMobile = customerMobile,
                     customerFlat = customerFlat,customerArea = customerArea,
                     customerPinCode = customerPinCode,customerCity = customerCity,
                     customerState = customerState)
             initDb(this)
-            db!!.dao().customerInsert(customerEntity)
+            if(customerUpdateId==-1) {
+                db!!.dao().customerInsert(customerEntity)
+            }
+            else{
+                customerEntity.customerId = customerUpdateId
+                db!!.dao().customerUpdate(customerEntity)
+            }
             finish()
         }
+    }
+    @SuppressLint("SetTextI18n")
+    private fun getEditData(){
+        val customerName=intent.getStringExtra("updateCustomerName")
+        val customerMobile=intent.getStringExtra("updateCustomerMobile")
+        customerUpdateId=intent.getIntExtra("updateCustomerId",-1)
+        binding.edtName.setText(customerName)
+        binding.edtMobile.setText(customerMobile)
     }
 }

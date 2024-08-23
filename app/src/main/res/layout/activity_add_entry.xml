@@ -29,7 +29,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/textEntry"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
@@ -69,6 +69,7 @@
             android:id="@+id/edtProductName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:inputType="textCapSentences"
             android:hint="Product Name" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -127,7 +128,7 @@
         app:cornerRadius="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtSelectDate" />
+        app:layout_constraintTop_toBottomOf="@+id/txtCollectionDate" />
 
     <TextView
         android:id="@+id/textView11"
@@ -206,7 +207,7 @@
     </RadioGroup>
 
     <TextView
-        android:id="@+id/txtSelectDate"
+        android:id="@+id/txtCollectionDate"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="20dp"
@@ -214,7 +215,7 @@
         android:drawablePadding="5dp"
         android:gravity="center"
         android:text="Set Collection Reminder"
-        android:visibility="visible"
+        android:visibility="gone"
         app:drawableStartCompat="@drawable/collection"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/rgPayment" />
@@ -233,10 +234,10 @@
             android:id="@+id/txtDatePicker"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingHorizontal="5dp"
             android:drawableStart="@drawable/collection"
             android:drawableEnd="@drawable/drop_down"
             android:drawablePadding="10dp"
+            android:padding="5dp"
             android:gravity="center" />
     </androidx.cardview.widget.CardView>
 

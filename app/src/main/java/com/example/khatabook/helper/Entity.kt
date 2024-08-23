@@ -24,7 +24,6 @@ data class CustomerEntity(
     @ColumnInfo
     var customerState:String=""
 )
-
 @Entity(tableName = "entry",
     foreignKeys = [ForeignKey(entity = CustomerEntity::class,
     parentColumns = ["customerId"],
@@ -40,11 +39,11 @@ data class EntryEntity(
     @ColumnInfo
     var entryProductName:String,
     @ColumnInfo
-    var entryProductQuantity:Int,
+    var entryProductQuantity:String,
     @ColumnInfo
-    var entryProductPrice:Int,
+    var entryProductPrice:String,
     @ColumnInfo
-    var entryProductAmount:Int,
+    var entryProductAmount:String,
     @ColumnInfo
     var entryProductStatus:Int,
     @ColumnInfo
@@ -78,11 +77,11 @@ data class  TransactionEntity(
     @ColumnInfo
     var entryProductName:String,
     @ColumnInfo
-    var entryProductQuantity:Int,
+    var entryProductQuantity:String,
     @ColumnInfo
-    var entryProductPrice:Int,
+    var entryProductPrice:String,
     @ColumnInfo
-    var entryProductAmount:Int,
+    var entryProductAmount:String,
     @ColumnInfo
     var entryProductStatus:Int,
     @ColumnInfo

@@ -16,6 +16,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.khatabook.activity.AddEntryActivity
 import com.example.khatabook.activity.AddUserActivity
+import com.example.khatabook.activity.CollectionActivity
 import com.example.khatabook.adapter.TabAdapter
 import com.example.khatabook.databinding.ActivityMainBinding
 import com.example.khatabook.helper.SharedHelper
@@ -80,6 +81,10 @@ class MainActivity : AppCompatActivity() {
             val addEntryIntent = Intent(this@MainActivity, AddEntryActivity::class.java)
             startActivity(addEntryIntent)
         }
+        binding.imgCollection.setOnClickListener {
+            val collectionIntent = Intent(this@MainActivity, CollectionActivity::class.java)
+            startActivity(collectionIntent)
+        }
     }
     @SuppressLint("InflateParams")
     private fun bottomSheet(){
@@ -112,5 +117,4 @@ class MainActivity : AppCompatActivity() {
         val companyName = sharedHelper.getCompanyName(this)
         binding.txtCompany.text = companyName
     }
-
 }

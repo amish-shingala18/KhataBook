@@ -4,13 +4,10 @@ import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ArrayAdapter
 import android.widget.BaseAdapter
-import android.widget.TextView
 import com.example.khatabook.R
 import com.example.khatabook.databinding.DropDownSampleBinding
 import com.example.khatabook.helper.CustomerEntity
-import kotlinx.coroutines.flow.combine
 
 class SpinnerAdapter(private var list: MutableList<CustomerEntity>) : BaseAdapter() {
     init{
