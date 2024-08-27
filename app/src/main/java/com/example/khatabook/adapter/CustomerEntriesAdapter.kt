@@ -40,7 +40,6 @@ class CustomerEntriesAdapter(private var list: MutableList<TransactionEntity>) :
             holder.binding.customerEntryProAmount.setTextColor(holder.itemView.context.getColor(R.color.red))
         }
 //        holder.binding.cvCustomerEntries.setOnClickListener {
-//            //Entry Date, Customer Name, Prod Name, Quantity, Price, Amount, Status, Collection Date
 //            val customerEntryIntent= Intent(holder.itemView.context, TransactionDetailActivity::class.java)
 //            customerEntryIntent.putExtra("customerEntryCustomerId",list[position].entryCustomerId)
 //            customerEntryIntent.putExtra("customerEntryCustomerName",list[position].customerName)

@@ -26,6 +26,7 @@ import java.util.Locale
 
 
 class AddEntryActivity : AppCompatActivity() {
+    private var editCustomerName: String?=""
     private var userList = mutableListOf<CustomerEntity>()
     private var entryUpdateId: Int = -1
     private var entryCurrentDate = ""
@@ -71,12 +72,10 @@ class AddEntryActivity : AppCompatActivity() {
             binding.textEntry.text = "Update Entry"
             binding.btnSubmit.text = "Update"
         }
-
         //Current Date
         val sdf = SimpleDateFormat("dd/MM/yyyy")
         entryCurrentDate = sdf.format(System.currentTimeMillis())
         binding.txtDatePicker.text = entryCurrentDate
-
 
         //Radio button Payment Status
         paymentStatus()
@@ -127,9 +126,11 @@ class AddEntryActivity : AppCompatActivity() {
         } else if (productPrice.isEmpty()) {
             binding.txtProductPriceLayout.isEnabled = true
             binding.txtProductPriceLayout.error = "Enter Product Price"
-        } else if (binding.customerSpinner.selectedItemPosition == 0) {
-            Toast.makeText(this, "Please Select Customer", Toast.LENGTH_SHORT).show()
-        } else {
+        } else if(binding.customerSpinner.selectedItemPosition==0){
+            Toast.makeText(this, "Select Customer", Toast.LENGTH_SHORT).show()
+        }
+
+        else {
             binding.txtProductNameLayout.isEnabled = false
             binding.txtProductQuantityLayout.isEnabled = false
             binding.txtProductPriceLayout.isEnabled = false
@@ -195,6 +196,7 @@ class AddEntryActivity : AppCompatActivity() {
         binding.txtCollectionDate.setCompoundDrawables(null, null, null, null)
     }
 
+    @SuppressLint("SetTextI18n")
     private fun paymentStatus() {
         binding.rgPayment.setOnCheckedChangeListener { _, checkedId ->
             when (checkedId) {
@@ -227,6 +229,7 @@ class AddEntryActivity : AppCompatActivity() {
 
     @SuppressLint("SetTextI18n")
     private fun getEditData() {
+        editCustomerName = intent.getStringExtra("editCustomerName")
         val productName = intent.getStringExtra("editProductName")
         val productQuantity = intent.getStringExtra("editProductQuantity")
         val productPrice = intent.getStringExtra("editProductPrice")
@@ -242,6 +245,9 @@ class AddEntryActivity : AppCompatActivity() {
         binding.txtDatePicker.text = productDate
         binding.txtCollectionDate.text = productCollectionDate ?: ""
         formattedDate = productCollectionDate ?: ""
+
+
+
         if(productAmount==null){
             binding.txtTotalAmount.text="₹0"
         }

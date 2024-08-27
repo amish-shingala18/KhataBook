@@ -44,10 +44,10 @@ class TransactionDetailActivity : AppCompatActivity() {
         binding.imgTransactionBack.setOnClickListener {
             finish()
         }
-        binding.button.setOnClickListener {
+        binding.btnDeleteEntry.setOnClickListener {
             deleteEntry()
         }
-        binding.button2.setOnClickListener {
+        binding.btnUpdateEntry.setOnClickListener {
             editEntryData()
         }
     }
