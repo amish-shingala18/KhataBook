@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.icu.util.Calendar
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -33,6 +34,9 @@ class HomeFragment : androidx.fragment.app.Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding=FragmentHomeBinding.inflate(inflater,container,false)
+        val dateSelected = Calendar.getInstance()
+        val formatDate=SimpleDateFormat("dd/MM/yyyy",Locale.getDefault())
+        dateFormatted = formatDate.format(dateSelected.time)
         exit()
         initRv()
         initClick()
@@ -82,6 +86,16 @@ class HomeFragment : androidx.fragment.app.Fragment() {
             dateFormatted = formatDate.format(dateSelected.time)
             binding.txtSeeAll.text= dateFormatted
             transactionList = db!!.dao().allRead(dateFormatted)
+            val debitAmount = db!!.dao().debitRead(dateFormatted)
+            binding.txtDebitAmount.text="₹${debitAmount}"
+            if (debitAmount==null){
+                binding.txtDebitAmount.text="₹0"
+            }
+            val creditAmount = db!!.dao().creditRead(dateFormatted)
+            binding.txtCreditAmount.text="₹${creditAmount}"
+            if (creditAmount==null){
+                binding.txtCreditAmount.text="₹0"
+            }
             homeAdapter.dataChanged(transactionList)
             data()
         },calendar.get(Calendar.YEAR),
@@ -93,15 +107,15 @@ class HomeFragment : androidx.fragment.app.Fragment() {
     @SuppressLint("SimpleDateFormat", "SetTextI18n")
     override fun onResume() {
         initDb(requireActivity())
-        val sdf = SimpleDateFormat("dd/MM/yyyy")
-        currentDate = sdf.format(System.currentTimeMillis())
-        transactionList = db!!.dao().allRead(currentDate)
-        val debitAmount = db!!.dao().debitRead(currentDate)
+        binding.txtSeeAll.text= dateFormatted
+        transactionList = db!!.dao().allRead(dateFormatted)
+        Log.e("TAG", "onResume: $dateFormatted")
+        val debitAmount = db!!.dao().debitRead(dateFormatted)
         binding.txtDebitAmount.text="₹${debitAmount}"
         if (debitAmount==null){
             binding.txtDebitAmount.text="₹0"
         }
-        val creditAmount = db!!.dao().creditRead(currentDate)
+        val creditAmount = db!!.dao().creditRead(dateFormatted)
         binding.txtCreditAmount.text="₹${creditAmount}"
         if (creditAmount==null){
             binding.txtCreditAmount.text="₹0"

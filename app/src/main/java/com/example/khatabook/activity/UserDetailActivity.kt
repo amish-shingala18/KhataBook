@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.khatabook.R
@@ -120,11 +121,13 @@ class UserDetailActivity : AppCompatActivity() {
             binding.imgNoEntry.visibility=View.VISIBLE
             binding.txtNoEntry.visibility=View.VISIBLE
             binding.rvcCustomerEntries.visibility= View.GONE
+            binding.main.setBackgroundColor(ContextCompat.getColor(binding.main.context,R.color.bgEmpty))
         }
         else{
             binding.imgNoEntry.visibility=View.GONE
             binding.txtNoEntry.visibility=View.GONE
             binding.rvcCustomerEntries.visibility= View.VISIBLE
+            binding.main.setBackgroundColor(ContextCompat.getColor(binding.main.context,R.color.white))
         }
     }
     @SuppressLint("NotifyDataSetChanged")

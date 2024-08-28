@@ -129,7 +129,6 @@ class AddEntryActivity : AppCompatActivity() {
         } else if(binding.customerSpinner.selectedItemPosition==0){
             Toast.makeText(this, "Select Customer", Toast.LENGTH_SHORT).show()
         }
-
         else {
             binding.txtProductNameLayout.isEnabled = false
             binding.txtProductQuantityLayout.isEnabled = false
@@ -154,8 +153,9 @@ class AddEntryActivity : AppCompatActivity() {
                 Toast.makeText(this, "Entry Added Successfully", Toast.LENGTH_SHORT).show()
             } else {
                 entryEntity.entryId=entryUpdateId
-                db!!.dao().entryUpdate(entryEntity)
+//                db!!.dao().entryUpdate(entryEntity)
                 Toast.makeText(this, "Entry Updated Successfully", Toast.LENGTH_SHORT).show()
+                Log.e("TAG", "addOrUpdateEntry: $entryEntity", )
             }
             finish()
         }
@@ -195,7 +195,6 @@ class AddEntryActivity : AppCompatActivity() {
         datePickerDialog.show()
         binding.txtCollectionDate.setCompoundDrawables(null, null, null, null)
     }
-
     @SuppressLint("SetTextI18n")
     private fun paymentStatus() {
         binding.rgPayment.setOnCheckedChangeListener { _, checkedId ->
@@ -227,36 +226,32 @@ class AddEntryActivity : AppCompatActivity() {
         datePickerDialog.show()
     }
 
+    @Suppress("SENSELESS_COMPARISON")
     @SuppressLint("SetTextI18n")
     private fun getEditData() {
         editCustomerName = intent.getStringExtra("editCustomerName")
         val productName = intent.getStringExtra("editProductName")
         val productQuantity = intent.getStringExtra("editProductQuantity")
         val productPrice = intent.getStringExtra("editProductPrice")
-        val productAmount = intent.getStringExtra("editProductAmount")
+        txtTotalAmount = intent.getStringExtra("editProductAmount")?:""
         val productDate = intent.getStringExtra("editProductDate")
         val productCollectionDate = intent.getStringExtra("editCollectionDate")
-
         txtProductStatus = intent.getIntExtra("editProductStatus", 1)
         entryUpdateId = intent.getIntExtra("editUpdateId", -1)
+
         binding.edtProductName.setText(productName)
         binding.edtProductQuantity.setText(productQuantity)
         binding.edtProductPrice.setText(productPrice)
         binding.txtDatePicker.text = productDate
         binding.txtCollectionDate.text = productCollectionDate ?: ""
         formattedDate = productCollectionDate ?: ""
-
-
-
-        if(productAmount==null){
+        if(txtTotalAmount==null){
             binding.txtTotalAmount.text="₹0"
         }
         else {
-            binding.txtTotalAmount.text = "₹$productAmount"
+            binding.txtTotalAmount.text = "₹$txtTotalAmount"
         }
-
         paymentStatus()
-
         if (txtProductStatus==1) {
             binding.rbDebit.isChecked = true
             binding.txtCollectionDate.visibility = View.GONE
