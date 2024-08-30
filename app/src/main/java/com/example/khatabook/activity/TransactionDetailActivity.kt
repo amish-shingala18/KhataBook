@@ -53,7 +53,8 @@ class TransactionDetailActivity : AppCompatActivity() {
     }
     private fun deleteEntry() {
         initDb(this)
-        val transactionEntity = TransactionEntity(entryId = transactionIntentId,
+        val transactionEntity = TransactionEntity(
+            entryId = transactionIntentId,
             customerMobile = transactionCustomerMobile!!,
             entryCustomerId=transactionEntryProductId,
             entryProductName=transactionProductName!!,

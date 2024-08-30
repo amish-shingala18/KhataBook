@@ -3,13 +3,11 @@ package com.example.khatabook.activity
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.content.DialogInterface
-import android.graphics.Rect
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.widget.addTextChangedListener
@@ -26,7 +24,7 @@ import java.util.Locale
 
 
 class AddEntryActivity : AppCompatActivity() {
-    private var editCustomerName: String?=""
+    private var editCustomerName: String=""
     private var userList = mutableListOf<CustomerEntity>()
     private var entryUpdateId: Int = -1
     private var entryCurrentDate = ""
@@ -46,6 +44,7 @@ class AddEntryActivity : AppCompatActivity() {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
         }
+
         //Get Intent
         getEditData()
 
@@ -54,9 +53,6 @@ class AddEntryActivity : AppCompatActivity() {
 
         //Insert and Update
         initClick()
-
-        //Keyboard padding
-        keyboardDetector()
     }
 
     private fun initSpinner() {
@@ -153,25 +149,14 @@ class AddEntryActivity : AppCompatActivity() {
                 Toast.makeText(this, "Entry Added Successfully", Toast.LENGTH_SHORT).show()
             } else {
                 entryEntity.entryId=entryUpdateId
-//                db!!.dao().entryUpdate(entryEntity)
+                db!!.dao().entryUpdate(entryEntity)
                 Toast.makeText(this, "Entry Updated Successfully", Toast.LENGTH_SHORT).show()
-                Log.e("TAG", "addOrUpdateEntry: $entryEntity", )
+                Log.e("TAG", "addOrUpdateEntry: $entryEntity")
             }
             finish()
         }
     }
 
-    private fun keyboardDetector() {
-        binding.main.viewTreeObserver.addOnGlobalLayoutListener {
-            val rect = Rect()
-            binding.main.getWindowVisibleDisplayFrame(rect)
-            val screenHeight = binding.main.rootView.height
-            val keypadHeight = screenHeight - rect.bottom
-            val view = binding.lnrTotalAmt.layoutParams as ConstraintLayout.LayoutParams
-            view.bottomMargin = if (keypadHeight > screenHeight * 0.10) keypadHeight else 0
-            binding.lnrTotalAmt.layoutParams = view
-        }
-    }
 
     @SuppressLint("SetTextI18n")
     private fun paymentDatePicker() {
@@ -229,7 +214,7 @@ class AddEntryActivity : AppCompatActivity() {
     @Suppress("SENSELESS_COMPARISON")
     @SuppressLint("SetTextI18n")
     private fun getEditData() {
-        editCustomerName = intent.getStringExtra("editCustomerName")
+        editCustomerName = intent.getStringExtra("editCustomerName") ?:""
         val productName = intent.getStringExtra("editProductName")
         val productQuantity = intent.getStringExtra("editProductQuantity")
         val productPrice = intent.getStringExtra("editProductPrice")
@@ -238,6 +223,7 @@ class AddEntryActivity : AppCompatActivity() {
         val productCollectionDate = intent.getStringExtra("editCollectionDate")
         txtProductStatus = intent.getIntExtra("editProductStatus", 1)
         entryUpdateId = intent.getIntExtra("editUpdateId", -1)
+
 
         binding.edtProductName.setText(productName)
         binding.edtProductQuantity.setText(productQuantity)

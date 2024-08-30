@@ -60,7 +60,7 @@ class CollectionActivity : AppCompatActivity() {
             dateSelected.set(year,month,dayOfMonth)
             val formatDate= SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
             collectionDateFormatted = formatDate.format(dateSelected.time)
-            Log.e("TAG", "datePicker: $collectionDateFormatted", )
+            Log.e("TAG", "datePicker: $collectionDateFormatted")
             binding.txtCollectionSelectDate.text= collectionDateFormatted
             collectionList = db!!.dao().collectionRead(collectionDateFormatted)
             collectionAdapter.dataChanged(collectionList)
@@ -93,7 +93,7 @@ class CollectionActivity : AppCompatActivity() {
         collectionCurrentDate = sdf.format(System.currentTimeMillis())
         collectionList = db!!.dao().collectionRead(collectionCurrentDate)
         Log.e("TAG", "onResume: $collectionList" )
-        Log.e("TAG", "onResume: $collectionCurrentDate", )
+        Log.e("TAG", "onResume: $collectionCurrentDate")
         collectionAdapter.dataChanged(collectionList)
         data()
         super.onResume()

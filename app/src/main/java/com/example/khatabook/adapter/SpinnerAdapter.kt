@@ -11,7 +11,10 @@ import com.example.khatabook.helper.CustomerEntity
 
 class SpinnerAdapter(private var list: MutableList<CustomerEntity>) : BaseAdapter() {
     init{
-        list.add(0, CustomerEntity(customerName = "--- Select Customer ---", customerMobile = ""))
+        list.add(
+            0,
+            CustomerEntity(customerName = "--- Select Customer ---", customerMobile = "")
+        )
     }
     override fun getCount(): Int {
         return list.count()

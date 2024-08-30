@@ -49,17 +49,13 @@ class AllUserAdapter(
             }
         }
         holder.sampleBinding.imgMessageUser.setOnClickListener {
-            if (holder.sampleBinding.imgMessageUser.context.checkSelfPermission
-                    (Manifest.permission.SEND_SMS)==
-                android.content.pm.PackageManager.PERMISSION_GRANTED){
-                val messageIntent = Intent(Intent.ACTION_SEND)
-                messageIntent.data= Uri.parse("smsto:${list[position].customerMobile}")
-                startActivity(holder.sampleBinding.imgMessageUser.context,messageIntent,null)
-            }
-            else{
-                Toast.makeText(holder.sampleBinding.imgMessageUser.context, "SMS Permission is Denied", Toast.LENGTH_SHORT).show()
-                permissionLauncher.launch(arrayOf(Manifest.permission.SEND_SMS))
-            }
+            val phoneNumber = list[position].customerMobile
+            val whatsAppMessage = "Hello ${list[position].customerName},\n\nWe have an exclusive offer for you! Get " +
+                    "10% off on your next purchase. " +
+                    "Hurry, offer valid for a limited time!"
+            val url = "https://api.whatsapp.com/send?phone= +91$phoneNumber&text=${Uri.encode(whatsAppMessage)}"
+            val whatsappIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+            startActivity(holder.sampleBinding.imgMessageUser.context, whatsappIntent, null)
         }
         holder.sampleBinding.cvCustomer.setOnClickListener {
             val intent = Intent(holder.sampleBinding.cvCustomer.context, UserDetailActivity::class.java)

@@ -1,13 +1,11 @@
 package com.example.khatabook.adapter
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.khatabook.R
-import com.example.khatabook.activity.TransactionDetailActivity
 import com.example.khatabook.databinding.CustomerEntriesSampleBinding
 import com.example.khatabook.helper.TransactionEntity
 

@@ -42,13 +42,15 @@
                 android:id="@+id/txtHomeProduct"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="Bag"
                 android:textSize="18sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/txtHomeUserName"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:text="User" />
         </LinearLayout>
 
         <TextView
