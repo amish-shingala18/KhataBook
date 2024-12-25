@@ -51,8 +51,8 @@ class MainActivity : AppCompatActivity() {
             }
         }
         val status = ContextCompat.checkSelfPermission(this,Manifest.permission.CALL_PHONE)
-
-        if(status==PackageManager.PERMISSION_GRANTED) {}
+        if(status==PackageManager.PERMISSION_GRANTED) {
+        }
         else if(ActivityCompat.shouldShowRequestPermissionRationale(
                 this, Manifest.permission.CALL_PHONE)){}
         else
@@ -95,6 +95,11 @@ class MainActivity : AppCompatActivity() {
             val edtCompanyName = bottomView.findViewById<EditText>(R.id.edtCompanyName)
             val txtCompanyLayout = bottomView.findViewById<TextInputLayout>(R.id.txtCompanyLayout)
             val btnSave = bottomView.findViewById<Button>(R.id.btnSave)
+
+            if(binding.txtCompany.text.toString().isNotEmpty()){
+                edtCompanyName.setText(binding.txtCompany.text.toString())
+            }
+
             btnSave.setOnClickListener{
                 val companyName = edtCompanyName.text.toString()
                 if (companyName.isEmpty()) {

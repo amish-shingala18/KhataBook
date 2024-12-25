@@ -3,6 +3,7 @@ package com.example.khatabook.activity
 import android.annotation.SuppressLint
 import android.app.DatePickerDialog
 import android.content.DialogInterface
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -11,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.core.widget.addTextChangedListener
-import com.example.khatabook.R
+import com.example.khatabook.MainActivity
 import com.example.khatabook.adapter.SpinnerAdapter
 import com.example.khatabook.databinding.ActivityAddEntryBinding
 import com.example.khatabook.helper.CustomerEntity
@@ -21,7 +22,6 @@ import com.example.khatabook.helper.EntryEntity
 import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Locale
-
 
 class AddEntryActivity : AppCompatActivity() {
     private var editCustomerName: String=""
@@ -39,7 +39,7 @@ class AddEntryActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityAddEntryBinding.inflate(layoutInflater)
         setContentView(binding.root)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(com.example.khatabook.R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
@@ -54,14 +54,16 @@ class AddEntryActivity : AppCompatActivity() {
         //Insert and Update
         initClick()
     }
-
     private fun initSpinner() {
         userList = initDb(this).dao().customerRead()
         spinnerAdapter = SpinnerAdapter(userList)
         binding.customerSpinner.adapter = spinnerAdapter
+
+        val selectedItemPosition = userList.indexOfFirst { it.customerName == editCustomerName }
+        binding.customerSpinner.setSelection(selectedItemPosition)
+
     }
     @SuppressLint("SimpleDateFormat", "SetTextI18n")
-
     private fun initClick() {
         //Update Detect
         if(entryUpdateId!=-1) {
@@ -72,15 +74,11 @@ class AddEntryActivity : AppCompatActivity() {
         val sdf = SimpleDateFormat("dd/MM/yyyy")
         entryCurrentDate = sdf.format(System.currentTimeMillis())
         binding.txtDatePicker.text = entryCurrentDate
-
         //Radio button Payment Status
         paymentStatus()
-
-
         binding.txtCollectionDate.setOnClickListener {
             paymentDatePicker()
         }
-
         binding.cvDatePicker.setOnClickListener {
             entryDatePicker()
         }
@@ -129,9 +127,7 @@ class AddEntryActivity : AppCompatActivity() {
             binding.txtProductNameLayout.isEnabled = false
             binding.txtProductQuantityLayout.isEnabled = false
             binding.txtProductPriceLayout.isEnabled = false
-
             val customerNameEntity = userList[binding.customerSpinner.selectedItemPosition]
-
             val entryEntity = EntryEntity(
                 entryCustomerId = customerNameEntity.customerId,
                 entryProductName = productName,
@@ -152,12 +148,11 @@ class AddEntryActivity : AppCompatActivity() {
                 db!!.dao().entryUpdate(entryEntity)
                 Toast.makeText(this, "Entry Updated Successfully", Toast.LENGTH_SHORT).show()
                 Log.e("TAG", "addOrUpdateEntry: $entryEntity")
+                startActivity(Intent(this, MainActivity::class.java))
             }
             finish()
         }
     }
-
-
     @SuppressLint("SetTextI18n")
     private fun paymentDatePicker() {
         val datePickerDialog = DatePickerDialog(this, { _, year, month, dayOfMonth ->
@@ -203,14 +198,14 @@ class AddEntryActivity : AppCompatActivity() {
         val datePickerDialog = DatePickerDialog(this, { _, year, month, dayOfMonth ->
             val selectedDate = Calendar.getInstance()
             selectedDate.set(year, month, dayOfMonth)
-            val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+            val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.
+            getDefault())
             entryCurrentDate = dateFormat.format(selectedDate.time)
             binding.txtDatePicker.text = entryCurrentDate
         }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH))
         datePickerDialog.datePicker.maxDate = calendar.timeInMillis
         datePickerDialog.show()
     }
-
     @Suppress("SENSELESS_COMPARISON")
     @SuppressLint("SetTextI18n")
     private fun getEditData() {
@@ -224,6 +219,7 @@ class AddEntryActivity : AppCompatActivity() {
         txtProductStatus = intent.getIntExtra("editProductStatus", 1)
         entryUpdateId = intent.getIntExtra("editUpdateId", -1)
 
+//        Log.e("Customer", "getEditData: ${editCustomerName}" )
 
         binding.edtProductName.setText(productName)
         binding.edtProductQuantity.setText(productQuantity)

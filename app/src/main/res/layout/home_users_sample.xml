@@ -7,7 +7,7 @@
     android:id="@+id/cvHomeUsers"
     android:layout_marginHorizontal="10dp"
     android:layout_marginVertical="5dp"
-    app:cardCornerRadius="20dp">
+    app:cardCornerRadius="10dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"

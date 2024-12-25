@@ -24,7 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:text="Khatabook"
-        android:textColor="@color/red"
+        android:textColor="#425E91"
         android:textSize="22sp"
         android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="@+id/imageView4"
